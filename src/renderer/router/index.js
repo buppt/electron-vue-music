@@ -12,9 +12,14 @@ export default new Router({
       redirect: '/search',
       children: [
         {
-          path: 'search',
+          path: 'search/:searchText',
           name: 'search',
           component: () => import('../components/ContentView/index.vue')
+        },
+        {
+          path: 'lyrics',
+          name: 'lyrics',
+          component: () => import('../components/Lyrics/index.vue')
         }
       ]
     },

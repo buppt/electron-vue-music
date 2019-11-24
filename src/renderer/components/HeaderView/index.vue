@@ -30,6 +30,7 @@ export default {
         searchText: this.searchText,
         currentPage: 1
       })
+      this.$router.push({ path: '/search/searchText' })
     }
   }
 }

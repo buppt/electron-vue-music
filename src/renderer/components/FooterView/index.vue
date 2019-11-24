@@ -27,20 +27,30 @@
         <i class="el-icon-headset volumeIcon"></i>
         <el-slider class="volume" v-model="volume" @input="setVolume"></el-slider>
       </div>
-      <span style="color: #c0c0c0;font-size:12px">{{musicName}}</span>
+      <span style="color: #616266;font-size:12px">
+        {{musicName}}
+        <lyrics type="line" :currentSecond="currentSecond" />
+      </span>
     </div>
+    <el-button @click="openLyrics" class="rightButton">查看歌词</el-button>
+
     <audio ref="audio" :src="url" v-show="false">您的浏览器不支持 audio 标签。</audio>
   </div>
 </template>
 
 <script>
+import Lyrics from '../Lyrics'
 export default {
+  components: {
+    Lyrics
+  },
   data() {
     return {
       audio: null,
       play: false,
       maxTime: '00:00',
       currentTime: '00:00',
+      currentSecond: 0,
       timeLine: 0,
       volume: 50,
       timeout: null,
@@ -77,6 +87,10 @@ export default {
     }
   },
   methods: {
+    openLyrics() {
+      console.log('111')
+      this.$router.push({ path: '/lyrics' })
+    },
     clickPlay() {
       if (this.audio.paused) {
         this.playMusic()
@@ -113,6 +127,7 @@ export default {
       }
     },
     watchTime() {
+      this.currentSecond = this.audio.currentTime
       this.maxTime = this.secondToMin(this.audio.duration)
       this.currentTime = this.secondToMin(this.audio.currentTime)
       this.timeLine = (this.audio.currentTime / this.audio.duration) * 100
@@ -176,5 +191,9 @@ export default {
 }
 .volume {
   width: 50px;
+}
+.rightButton {
+  padding: 5px 10px;
+  margin-left: 15px;
 }
 </style>
