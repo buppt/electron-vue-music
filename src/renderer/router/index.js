@@ -9,7 +9,7 @@ export default new Router({
       path: '/',
       name: 'landing-page',
       component: require('@/views').default,
-      redirect: '/search',
+      redirect: '/search/""',
       children: [
         {
           path: 'search/:searchText',

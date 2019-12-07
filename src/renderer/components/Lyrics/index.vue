@@ -1,8 +1,11 @@
 <template>
-  <div v-if="!type" class="main">
-    <div v-for="(lyric,index) in lyricsMap['lyrics']" :key="index">{{lyric}}</div>
+  <span v-if="type">{{lyricsMap['lyrics']?lyricsMap['lyrics'][currentIndex]:null}}</span>
+  <div v-else class="main">
+    <div v-if="lyricsMap['lyrics']">
+      <div v-for="(lyric,index) in lyricsMap['lyrics']" :key="index">{{lyric}}</div>
+    </div>
+    <div v-else>播放音乐，查看歌词</div>
   </div>
-  <span v-else>{{lyricsMap['lyrics']?lyricsMap['lyrics'][currentIndex]:null}}</span>
 </template>
 
 <script>
@@ -41,9 +44,13 @@ export default {
   methods: {
     searchLyrics() {
       if (this.lyricUrl) {
-        net.get(this.lyricUrl).then(value => {
-          this.parseLyrics(value.data)
-        })
+        try {
+          net.get(this.lyricUrl).then(value => {
+            this.parseLyrics(value.data)
+          })
+        } catch (e) {
+          console.log(e)
+        }
       }
     },
     parseLyrics(lyrics) {

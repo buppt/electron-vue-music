@@ -1,9 +1,17 @@
 <template>
   <div class="main">
-    <span class="back">
+    <span
+      class="back"
+      :style="backArr.length===0?'color:#ccc;cursor: not-allowed;':'color:#000;cursor: pointer;'"
+      @click="goBack"
+    >
       <i class="el-icon-arrow-left"></i>
     </span>
-    <span class="back">
+    <span
+      class="back"
+      :style="frontArr.length===0?'color:#ccc;cursor: not-allowed;':'color:#000;cursor: pointer;'"
+      @click="goFront"
+    >
       <i class="el-icon-arrow-right"></i>
     </span>
     <el-input
@@ -21,7 +29,10 @@
 export default {
   data() {
     return {
-      searchText: ''
+      searchText: '',
+      lastSearch: '',
+      backArr: [],
+      frontArr: []
     }
   },
   methods: {
@@ -30,7 +41,34 @@ export default {
         searchText: this.searchText,
         currentPage: 1
       })
-      this.$router.push({ path: '/search/searchText' })
+      if (this.lastSearch) {
+        this.backArr.push(this.lastSearch)
+      }
+      this.lastSearch = this.searchText
+    },
+    goBack() {
+      if (this.backArr.length === 0) {
+        return
+      }
+      this.frontArr.push(this.searchText)
+      const text = this.backArr.pop()
+      this.searchText = text
+      this.$store.dispatch('search', {
+        searchText: this.searchText,
+        currentPage: 1
+      })
+    },
+    goFront() {
+      if (this.frontArr.length === 0) {
+        return
+      }
+      this.backArr.push(this.searchText)
+      const text = this.frontArr.pop()
+      this.searchText = text
+      this.$store.dispatch('search', {
+        searchText: this.searchText,
+        currentPage: 1
+      })
     }
   }
 }
@@ -44,6 +82,7 @@ export default {
   display: flex;
   align-items: center;
   margin-left: 10px;
+  cursor: pointer;
 }
 .searchButton {
   padding: 0 8px;
