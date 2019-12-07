@@ -1,25 +1,24 @@
 <template>
   <div class="main">
-    <ol>
-      <li class="searchRow" v-for="content in result" :key="content.id">
-        <span @click="playMusic(content)">{{content.name}}</span>
-        <span style="margin-left:15px">{{showName(content.singers)}}</span>
-        <el-button
-          icon="el-icon-circle-plus-outline"
-          class="searchButton"
-          @click="addToList(content)"
-        >添加到列表</el-button>
-      </li>
+    <div class="searchRow" v-for="(content,index) in result" :key="content.id">
+      <span>{{(currentPage-1)*10+index+1}}.</span>
+      <span @click="playMusic(content)">{{content.name}}</span>
+      <span style="margin-left:15px">{{showName(content.singers)}}</span>
+      <el-button
+        icon="el-icon-circle-plus-outline"
+        class="searchButton"
+        @click="addToList(content)"
+      >添加到列表</el-button>
+    </div>
 
-      <el-pagination
-        :hide-on-single-page="total<=10"
-        layout="prev, pager, next"
-        :page-size="10"
-        :total="parseInt(total)"
-        @current-change="handlePageChange"
-        style="margin-top: 25px"
-      ></el-pagination>
-    </ol>
+    <el-pagination
+      :hide-on-single-page="total<=10"
+      layout="prev, pager, next"
+      :page-size="10"
+      :total="parseInt(total)"
+      @current-change="handlePageChange"
+      style="margin-top: 25px"
+    ></el-pagination>
   </div>
 </template>
 
@@ -27,7 +26,7 @@
 export default {
   data() {
     return {
-      searchContent: [1, 2]
+      currentPage: 1
     }
   },
   computed: {
@@ -51,6 +50,7 @@ export default {
         .join('/')
     },
     handlePageChange(page) {
+      this.currentPage = page
       this.$store.dispatch('search', {
         searchText: '',
         currentPage: page
@@ -68,6 +68,7 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: auto;
+  margin-left: 30px;
 }
 .searchRow {
   cursor: pointer;

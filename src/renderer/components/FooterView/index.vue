@@ -88,8 +88,11 @@ export default {
   },
   methods: {
     openLyrics() {
-      console.log('111')
-      this.$router.push({ path: '/lyrics' })
+      if (this.$route.path === '/lyrics') {
+        this.$router.push({ path: '/search/' })
+      } else {
+        this.$router.push({ path: '/lyrics' })
+      }
     },
     clickPlay() {
       if (this.audio.paused) {
