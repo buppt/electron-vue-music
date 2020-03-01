@@ -18,6 +18,12 @@ mac 版<a href="https://github.com/buppt/electron-vue-music/releases/download/v0
 - [x] 搜索内容前进后退
 - [x] 查看歌曲歌词
 - [ ] 歌词滚动
+- [ ] 歌单
+- [ ] 排行榜
+- [ ] 专辑
+- [ ] 搜索提示
+- [ ] 搜索热词
+- [ ] 歌手详情页
 
 ### Build Setup
 

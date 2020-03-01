@@ -7,7 +7,7 @@ const state = {
 const mutations = {
   addToList(state, music) {
     for (let i = 0; i < state.result.length; i++) {
-      if (state.result[i].contentId === music.contentId) {
+      if (state.result[i].id === music.id) {
         return
       }
     }
@@ -36,7 +36,7 @@ const mutations = {
   },
   setIndex(state) {
     state.result.forEach((e, index) => {
-      if (e.contentId === state.currentMusicInfo.contentId) {
+      if (e.id === state.currentMusicInfo.id) {
         state.currentIndex = index
       }
     })

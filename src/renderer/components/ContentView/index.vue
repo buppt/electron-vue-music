@@ -2,8 +2,8 @@
   <div class="main">
     <div class="searchRow" v-for="(content,index) in result" :key="content.id">
       <span>{{(currentPage-1)*10+index+1}}.</span>
-      <span @click="playMusic(content)">{{content.name}}</span>
-      <span style="margin-left:15px">{{showName(content.singers)}}</span>
+      <span @click="playMusic(content)">{{content.songName}}</span>
+      <span style="margin-left:15px">{{content.singerName}}</span>
       <el-button
         icon="el-icon-circle-plus-outline"
         class="searchButton"

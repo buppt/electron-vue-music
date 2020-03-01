@@ -11,30 +11,19 @@
     </div>
     <div>
       <div class="right">
-        <img :src="imgUrl" style="width:30px;height:30px" />
-        <el-dropdown @command="setQuality" style="margin-left:5px">
-          <span class="el-dropdown-link">
-            {{quality}}
-            <i class="el-icon-arrow-down"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="无损">无损</el-dropdown-item>
-            <el-dropdown-item command="高品">高品</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <img :src="currentMusicInfo.cover" style="width:30px;height:30px" />
         <el-slider class="timeLine" v-model="timeLine" @change="setTime"></el-slider>
         <span style="margin-left:5px">{{`${currentTime}/${maxTime}`}}</span>
         <i class="el-icon-headset volumeIcon"></i>
         <el-slider class="volume" v-model="volume" @input="setVolume"></el-slider>
       </div>
       <span style="color: #616266;font-size:12px">
-        {{musicName}}
-        <lyrics type="line" :currentSecond="currentSecond" />
+        {{currentMusicInfo.songName}}
+        <!-- <lyrics type="line" :currentSecond="currentSecond" /> -->
       </span>
     </div>
-    <el-button @click="openLyrics" class="rightButton">查看歌词</el-button>
-
-    <audio ref="audio" :src="url" v-show="false">您的浏览器不支持 audio 标签。</audio>
+    <!-- <el-button @click="openLyrics" class="rightButton">查看歌词</el-button> -->
+    <audio ref="audio" :src="currentMusicInfo.mp3" v-show="false">您的浏览器不支持 audio 标签。</audio>
   </div>
 </template>
 
@@ -67,23 +56,10 @@ export default {
   },
   computed: {
     contentId() {
-      return this.$store.state.playList.currentMusicInfo.contentId
+      return this.$store.state.playList.currentMusicInfo.id
     },
-    musicName() {
-      return this.$store.state.playList.currentMusicInfo.name
-    },
-    url() {
-      const toneFlag = this.quality === '高品' ? 'HQ' : 'SQ'
-      const resourceType = this.quality === '高品' ? '2' : 'E'
-      return `http://app.pd.nf.migu.cn/MIGUM2.0/v1.0/content/sub/listenSong.do?toneFlag=${toneFlag}&netType=00&userId=15548614588710179085069&ua=Android_migu&version=5.1&copyrightId=0&contentId=${this.contentId}&resourceType=${resourceType}&channel=1`
-    },
-    imgUrl() {
-      const img = this.$store.state.playList.currentMusicInfo.imgItems
-      if (img) {
-        return img.filter(e => e.imgSizeType === '01')[0].img
-      } else {
-        return ''
-      }
+    currentMusicInfo() {
+      return this.$store.state.playList.currentMusicInfo
     }
   },
   methods: {

@@ -26,16 +26,14 @@ const actions = {
     } else {
       searchText = state.searchText
     }
-    const url = `http://pd.musicapp.migu.cn/MIGUM2.0/v1.0/content/search_all.do?&ua=Android_migu&version=5.0.1&text=${encodeURI(
+    const url = `http://m.music.migu.cn/migu/remoting/scr_search_tag?rows=20&type=2&keyword=${encodeURI(
       searchText
-    )}&pageNo=${currentPage}&pageSize=${
-      state.pageSize
-    }&searchSwitch={"song":1,"album":0,"singer":0,"tagSong":0,"mvSong":0,"songlist":0,"bestShow":1}`
+    )}&&pgc=${currentPage}`
     net
       .get(url)
       .then(value => {
-        commit('setTotal', value.data.songResultData.totalCount)
-        commit('setResult', value.data.songResultData.result)
+        commit('setTotal', value.data.pgt)
+        commit('setResult', value.data.musics)
       })
       .catch(err => {
         console.log(err)
