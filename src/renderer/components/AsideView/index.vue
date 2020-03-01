@@ -7,8 +7,8 @@
     </div>
     <ol class="list">
       <li v-for="(music,index) in result" :key="music.id" class="menu">
-        <span @click="playMusic(music)">{{music.name}}</span>
-        <span style="margin-left:10px">{{showName(music.singers)}}</span>
+        <span @click="playMusic(music)">{{music.songName}}</span>
+        <span style="margin-left:10px">{{music.singerName}}</span>
         <i class="el-icon-remove-outline" @click="remove(index)"></i>
       </li>
     </ol>

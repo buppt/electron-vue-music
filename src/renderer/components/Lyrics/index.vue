@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     lyricUrl() {
-      return this.$store.state.playList.currentMusicInfo.lyricUrl
+      return this.$store.state.playList.currentMusicInfo.lyrics
     }
   },
   watch: {
