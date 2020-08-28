@@ -26,11 +26,6 @@ const mutations = {
     this.commit('setIndex')
   },
   setContentIdByIndex(state, index) {
-    if (index < 0) {
-      index = 0
-    } else if (index >= state.result.length) {
-      index = state.result.length - 1
-    }
     state.currentMusicInfo = state.result[index]
     this.commit('setIndex')
   },
@@ -44,8 +39,27 @@ const mutations = {
   lastMusic(state) {
     this.commit('setContentIdByIndex', state.currentIndex - 1)
   },
-  nextMusic(state) {
-    this.commit('setContentIdByIndex', state.currentIndex + 1)
+  nextMusic(state, value) {
+    if (state.currentIndex === state.result.length - 1) {
+      if (value && value === '列表播放') {
+        this.commit('setContentIdByIndex', state.result.length - 1)
+      } else if (value && value === '随机播放') {
+        let num = Math.ceil(Math.random() * (state.result.length - 1))
+        this.commit('setContentIdByIndex', state.result.length - num)
+      } else {
+        this.commit('setContentIdByIndex', 0)
+      }
+    } else {
+      if (value && value === '随机播放') {
+        let num = Math.floor(Math.random() * state.result.length)
+        if (num === state.currentIndex) {
+          num++
+        }
+        this.commit('setContentIdByIndex', num)
+      } else {
+        this.commit('setContentIdByIndex', state.currentIndex + 1)
+      }
+    }
   }
 }
 

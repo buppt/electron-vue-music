@@ -24,6 +24,19 @@
     </div>
     <!-- <el-button @click="openLyrics" class="rightButton">查看歌词</el-button> -->
     <audio ref="audio" :src="currentMusicInfo.mp3" v-show="false">您的浏览器不支持 audio 标签。</audio>
+    <el-select v-model="value" 
+      placeholder="请选择"
+      size="mini" 
+      style="width: 100px;
+      margin-left: 20px;
+      margin-top: -10px;">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
   </div>
 </template>
 
@@ -43,7 +56,21 @@ export default {
       timeLine: 0,
       volume: 50,
       timeout: null,
-      quality: '高品'
+      quality: '高品',
+      options: [{
+        value: '列表循环',
+        label: '列表循环'
+      }, {
+        value: '单曲循环',
+        label: '单曲循环'
+      }, {
+        value: '随机播放',
+        label: '随机播放'
+      }, {
+        value: '列表播放',
+        label: '列表播放'
+      }],
+      value: '列表循环'
     }
   },
   mounted() {
@@ -85,7 +112,7 @@ export default {
       this.play = true
       this.audio.onended = () => {
         clearInterval(this.timeout)
-        this.nextMusic()
+        this.nextMusic(this.value)
       }
       this.timeout = setInterval(() => {
         this.watchTime()
@@ -123,8 +150,8 @@ export default {
     lastMusic() {
       this.$store.commit('lastMusic')
     },
-    nextMusic() {
-      this.$store.commit('nextMusic')
+    nextMusic(value) {
+      this.$store.commit('nextMusic', value)
     }
   }
 }

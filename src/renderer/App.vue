@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'my-project'
+  name: 'music-player'
 }
 </script>
 
