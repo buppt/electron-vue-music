@@ -1,6 +1,6 @@
 {
   "name": "music-player",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "buppt <574690129@qq.com>",
   "description": "An electron-vue project",
   "license": null,
@@ -22,7 +22,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "music-player",
+    "productName": "Music Player",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"
@@ -46,7 +46,7 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "build/icons/icon.jpg"
     },
     "win": {
       "icon": "build/icons/icon.ico"
@@ -57,7 +57,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "electron-updater": "^4.3.1",
     "element-ui": "^2.12.0",
+    "update-electron-app": "^1.5.0",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
